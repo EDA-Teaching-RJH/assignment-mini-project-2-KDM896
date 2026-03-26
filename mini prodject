@@ -1,13 +1,17 @@
 class Transactions: 
-    def __int__(self, date, amount, catagory):
+    def __init__(self, date, amount, category):
         self.date = date
-        self.date = catagory
-        self.amount = amount # my first class being used as the main class where i will continue on using inheritance to create a clear structure 
-        class Income(Transactions):
-    def __int__(self, date, amount, catagory)
-        super(). __int__(date, amount, catagory)
-        self.source = source 
+        self.category = category
+        self.amount = amount # my first class being used as the main class where i will continue on using inheritance to create a clear structure for the sub classes.
+    def get_summary(self):
+        return f"{self.date} | {self.category} | £{self.amount}"
+
+class Income(Transactions):
+    def __init__(self, date, amount, category, source):
+        super().__init__(date, amount, category)
+        self.source = source #
+
 class Expenses(Transactions):
-    def __int__(self, date, amount, catagory)
-        super(). __int__(date, amount, catagory)#using inheritance with 'super' in these two classes to avoid repeating code over and over. 
+    def __init__(self, date, amount, category, source): # using inheritance with 'super' in these two classes to avoid repeating code over and over.
+        super().__init__(date, amount, category)
         self.source = source 
