@@ -9,7 +9,7 @@ class Transactions:
 class Income(Transactions):
     def __init__(self, date, amount, category, source):
         super().__init__(date, amount, category)
-        self.source = source #
+        self.source = source
 
 class Expenses(Transactions):
     def __init__(self, date, amount, category, source): # using inheritance with 'super' in these two classes to avoid repeating code over and over.
@@ -17,12 +17,38 @@ class Expenses(Transactions):
         self.source = source 
 def main():
     initial_balance = 5500
-    transactions = []
+    transactions = []# this is where i will be storing transactions and creating a starting balance for the user to work with.
     while True:
         print("================== Personal Finance Tracker ==================")
         print("1- Add Income")
         print("2- Add Expense")
         print("3- View Summary")
         print("4- Exit")
-        choice = input("Choose an option: ")
-    if
+        choice = input("Choose an option:")
+        
+        if choice == "1":
+            date = input("Enter date (YYYY-MM-DD):")
+            amount = float(input("Enter amount:"))# getting user input for the date and amount of the transaction, then creating an instance of the Income class and adding it to the transactions list. also updating the initial balance by adding the income amount.
+            category = input("Enter category:")
+            source = input("Enter source:")
+            income = Income(date, amount, category, source)
+            transactions.append(income)
+            initial_balance += amount
+            print("funds added to record.")
+        
+        elif choice == "2":
+            date = input("Enter date (YYYY-MM-DD):")
+            amount = float(input("Enter amount:"))
+            category = input("Enter category:")
+            source = input("Enter source:")
+            expense = Expenses(date, amount, category, source)
+            transactions.append(expense)
+            initial_balance -= amount
+            print("funds removed from record.")
+
+
+
+
+
+if __name__ == "__main__":
+            main()
