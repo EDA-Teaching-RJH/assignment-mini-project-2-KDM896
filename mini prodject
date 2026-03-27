@@ -1,30 +1,48 @@
 class Transactions: 
     def __init__(self, date, amount, category):
-        self.date = date
+        self.date = date # defining the variables for the transactions that will come in and the information required for them to be logged correctly.
         self.category = category
         self.amount = amount # my first class being used as the main class where i will continue on using inheritance to create a clear structure for the sub classes.
     def get_summary(self):
-        return f"{self.date} | {self.category} | £{self.amount}"
+        return f"{self.date} | {self.category} | £{self.amount}"# this will return a string representation of the transaction, which will be used when viewing the summary of transactions.
 
 class Income(Transactions):
     def __init__(self, date, amount, category, source):
         super().__init__(date, amount, category)
         self.source = source
+        self.transaction_type = "Income"# added to both the income and expense class to allow for differentiation between income and expenses when viewing the summary of transactions.
 
 class Expenses(Transactions):
     def __init__(self, date, amount, category, source): # using inheritance with 'super' in these two classes to avoid repeating code over and over.
         super().__init__(date, amount, category)
-        self.source = source 
+        self.source = source
+        self.transaction_type = "Expense"
+
+import csv
+
+def save_transactions(transactions):
+    with open("finances.csv", "w", newline="") as file:
+        fieldnames = ["Date", "Amount", "Category", "Source"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        for transaction in transactions:
+            writer.writerow({
+                "Date": transaction.date,
+                "Amount": transaction.amount,
+                "Category": transaction.category,
+                "Source": transaction.source,
+            })# the function here is to save the transactions to a csv file, it also provides the previouse transactions that were saved in the file to the transactions list.
+
 def main():
     initial_balance = 5500
-    transactions = []# this is where i will be storing transactions and creating a starting balance for the user to work with.
+    transactions = []#  this is the starting point of the users balance and transactions list.
+    
     while True:
-        print("================== Personal Finance Tracker ==================")
         print("1- Add Income")
         print("2- Add Expense")
         print("3- View Summary")
         print("4- Exit")
-        choice = input("Choose an option:")
+        choice = input("Choose an option:")# looping the main menu to allow for user to continue using the program for multiple inputs.
         
         if choice == "1":
             date = input("Enter date (YYYY-MM-DD):")
@@ -45,6 +63,13 @@ def main():
             transactions.append(expense)
             initial_balance -= amount
             print("funds removed from record.")
+        elif choice == "3":
+            for transaction in transactions:
+                print(transaction.get_summary())
+            print(f"Current balance: £{initial_balance}")
+        elif choice == "4":
+            break
+
 
 
 
