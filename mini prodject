@@ -50,9 +50,19 @@ def load_transactions():
     except FileNotFoundError:
         pass
     return transactions
+
+def calculate_balance(start_balance, transaction_list):
+    balance = start_balance
+    for t in transaction_list:
+        if "Income" in t.category:
+            balance += t.amount
+        else:
+            balance -= t.amount
+    return balance# this function is to calculate the current balance based on the starting balance and the transactions that have been made, it will loop through the transactions and add or subtract the amount based on whether it is a income or expense.
+
 def main():
-    initial_balance = 5500
-    transactions = []#  this is the starting point of the users balance and transactions list.
+    transactions = load_transactions()# this loads the transactions from the csv file and calculating the initial balance based on the starting balance of 5500 and the transactions that have been loaded. this allows for the user to continue using the program without losing their previous data.
+    initial_balance = calculate_balance(5500, transactions)
     
     while True:
         print("1- Add Income")
@@ -85,6 +95,8 @@ def main():
                 print(transaction.get_summary())
             print(f"Current balance: £{initial_balance}")
         elif choice == "4":
+            save_transactions(transactions)
+            print("data saved. exiting program.")
             break
 
 
