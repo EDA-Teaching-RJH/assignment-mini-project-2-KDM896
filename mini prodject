@@ -33,6 +33,23 @@ def save_transactions(transactions):
                 "Source": transaction.source,
             })# the function here is to save the transactions to a csv file, it also provides the previouse transactions that were saved in the file to the transactions list.
 
+def load_transactions():
+    transactions = []
+    try:
+        with open("finances.csv", "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                date = row["Date"]
+                amount = float(row["Amount"])
+                category = row["Category"]
+                source = row["Source"]
+                if "Income" in category:
+                    transactions.append(Income(date, amount, category, source))
+                else:
+                    transactions.append(Expenses(date, amount, category, source))
+    except FileNotFoundError:
+        pass
+    return transactions
 def main():
     initial_balance = 5500
     transactions = []#  this is the starting point of the users balance and transactions list.
