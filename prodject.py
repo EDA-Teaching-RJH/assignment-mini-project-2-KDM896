@@ -44,7 +44,7 @@ def load_transactions():
                 category = row["Category"]
                 source = row["Source"]
                 if "Income" in category:
-                    transactions.append(Income(date, amount, category, source))
+                    transactions.append(Income(date, amount, category, source))# this function is to load the transactions from the csv file, it reads the file and creates instances of the Income or Expenses class based on the category of the transaction, then adds them to the transactions list.
                 else:
                     transactions.append(Expenses(date, amount, category, source))
     except FileNotFoundError:
@@ -60,7 +60,25 @@ def calculate_balance(start_balance, transaction_list):
             balance -= t.amount
     return balance# this function is to calculate the current balance based on the starting balance and the transactions that have been made, it will loop through the transactions and add or subtract the amount based on whether it is a income or expense.
 
+def security_check():#Defining the security log in function to make it so only the original user can login validating the answers against the given correct answers.
+    correct_Name = "Kenzie Minott"
+    correct_date_of_birth = "14-01-2006"
+    correct_passcode = "7890"
+    name = input("Enter your name:")
+    date_of_birth = input("Enter your date of birth (DD-MM-YYYY):")
+    passcode = input("Enter your passcode:")
+    if name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode:
+        print("Access granted. Welcome to your financial tracker.")
+        return True
+    else:
+        print("Access denied. Incorrect login details.")
+        return False
+    
 def main():
+    
+    if not security_check():
+        return
+    
     transactions = load_transactions()# this loads the transactions from the csv file and calculating the initial balance based on the starting balance of 5500 and the transactions that have been loaded. this allows for the user to continue using the program without losing their previous data.
     initial_balance = calculate_balance(5500, transactions)
     
@@ -72,7 +90,7 @@ def main():
         choice = input("Choose an option:")# looping the main menu to allow for user to continue using the program for multiple inputs.
         
         if choice == "1":
-            date = input("Enter date (YYYY-MM-DD):")
+            date = input("Enter date (DD-MM-YYYY):")
             amount = float(input("Enter amount:"))# getting user input for the date and amount of the transaction, then creating an instance of the Income class and adding it to the transactions list. also updating the initial balance by adding the income amount.
             category = input("Enter category:")
             source = input("Enter source:")
@@ -82,7 +100,7 @@ def main():
             print("funds added to record.")
         
         elif choice == "2":
-            date = input("Enter date (YYYY-MM-DD):")
+            date = input("Enter date (DD-MM-YYYY):")
             amount = float(input("Enter amount:"))
             category = input("Enter category:")
             source = input("Enter source:")
