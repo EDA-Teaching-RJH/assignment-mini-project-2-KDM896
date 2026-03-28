@@ -16,3 +16,9 @@ def test_maths_logic():
 
 def test_empty_list():
     assert module.calculate_balance(5500, []) == 5500
+
+def test_security_check():
+    assert module.check_credentials("Kenzie Minott", "14-01-2006", "7890") == True
+    assert module.check_credentials("Wrong Name", "14-01-2006", "7890") == False
+    assert module.check_credentials("Kenzie Minott", "Wrong Date", "7890") == False
+    assert module.check_credentials("Kenzie Minott", "14-01-2006", "Wrong Passcode") == False

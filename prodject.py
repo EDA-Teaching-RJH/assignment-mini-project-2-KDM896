@@ -34,13 +34,13 @@ def save_transactions(transactions):
             })# the function here is to save the transactions to a csv file, it also provides the previouse transactions that were saved in the file to the transactions list.
 
 def load_transactions():
-    transactions = []
+    transactions = []#
     try:
         with open("finances.csv", "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 date = row["Date"]
-                amount = float(row["Amount"])
+                amount = float(row["Amount"])# this is reading the transactions from the csv file and creating instances of the Income or Expenses class based on the category of the transaction, then adding them to the transactions list. this allows for the user to continue using the program without losing their previous data.
                 category = row["Category"]
                 source = row["Source"]
                 if "Income" in category:
@@ -74,6 +74,13 @@ def security_check():#Defining the security log in function to make it so only t
         print("Access denied. Incorrect login details.")
         return False
     
+def check_credentials(name, date_of_birth, passcode):
+        correct_Name = "Kenzie Minott"
+        correct_date_of_birth = "14-01-2006"
+        correct_passcode = "7890"
+        return name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode#
+    
+
 def main():
     
     if not security_check():
@@ -89,7 +96,7 @@ def main():
         print("4- Exit")
         choice = input("Choose an option:")# looping the main menu to allow for user to continue using the program for multiple inputs.
         
-        if choice == "1":
+        if choice == "1":# assigns the users input for a desired outcome.
             date = input("Enter date (DD-MM-YYYY):")
             amount = float(input("Enter amount:"))# getting user input for the date and amount of the transaction, then creating an instance of the Income class and adding it to the transactions list. also updating the initial balance by adding the income amount.
             category = input("Enter category:")
