@@ -54,7 +54,7 @@ def load_transactions():
 def calculate_balance(start_balance, transaction_list):
     balance = start_balance
     for t in transaction_list:
-        if "Income" in t.category:
+        if t.transaction_type == "Income":
             balance += t.amount
         else:
             balance -= t.amount
