@@ -42,7 +42,7 @@ def load_transactions():
             reader = csv.DictReader(file)
             for row in reader:
                 date = row["Date"]
-                amount = float(row["Amount"])# this is reading the transactions from the csv file and creating instances of the Income or Expenses class based on the category of the transaction, then adding them to the transactions list. this allows for the user to continue using the program without losing their previous data.
+                amount = float(row["Amount"])# this is reading the transactions from the csv file and creating instances of the Income or Expenses class based on the category of the transaction, then adding them to the transactions list. 
                 category = row["Category"]
                 source = row["Source"]
                 if "Income" in category:
