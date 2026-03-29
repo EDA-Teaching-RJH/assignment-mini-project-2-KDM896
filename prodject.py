@@ -106,7 +106,6 @@ def main():
         
         if choice == "1":# assigns the users input for a desired outcome.
             while True:
-
                 date = input("Enter date (DD-MM-YYYY):")
                 if validate_date(date):
                     break
@@ -121,7 +120,13 @@ def main():
             print("funds added to record.")
         
         elif choice == "2":
-            date = input("Enter date (DD-MM-YYYY):")
+            while True:
+                date = input("Enter date (DD-MM-YYYY):")
+                if validate_date(date):
+                    break# this is to get the user input for the date and validate it using the validate_date function, if the date is not in the correct format it will keep asking for a valid date until it gets it.
+                else:
+                    print("Invalid date format. Please enter the date in DD-MM-YYYY format.")
+            
             amount = float(input("Enter amount:"))
             category = input("Enter category:")
             source = input("Enter source:")
