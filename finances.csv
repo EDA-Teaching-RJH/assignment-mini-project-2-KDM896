@@ -1,3 +1,6 @@
 Date,Amount,Category,Source
 2026-03-29,400.5,expense,source
 2026-03-29,700.0,Expense,television
+12-06-2026,200.0,Income,sold TV
+13-06-2026,700.0,income ,sold car
+30,75.0,expense ,food shop

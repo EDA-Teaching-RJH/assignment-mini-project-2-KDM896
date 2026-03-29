@@ -18,6 +18,8 @@ class Expenses(Transactions):
         self.source = source
         self.transaction_type = "Expense"
 
+import re
+
 import csv
 
 def save_transactions(transactions):
@@ -65,9 +67,14 @@ def security_check():#Defining the security log in function to make it so only t
     correct_date_of_birth = "14-01-2006"
     correct_passcode = "7890"
     name = input("Enter your name:")
-    date_of_birth = input("Enter your date of birth (DD-MM-YYYY):")
+    while True:
+        date_of_birth = input("Enter your date of birth (DD-MM-YYYY):")
+        if validate_date(date_of_birth):        
+            break
+        else:
+            print("Invalid date format. Please enter the date in DD-MM-YYYY format.")
     passcode = input("Enter your passcode:")
-    if name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode:
+    if name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode:#this is to check that the correct credentyials are being added , then allowing access to the menmu if they are correct.
         print("Access granted. Welcome to your financial tracker.")
         return True
     else:
@@ -78,11 +85,12 @@ def check_credentials(name, date_of_birth, passcode):
         correct_Name = "Kenzie Minott"
         correct_date_of_birth = "14-01-2006"
         correct_passcode = "7890"
-        return name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode#
-    
+        return name == correct_Name and date_of_birth == correct_date_of_birth and passcode == correct_passcode# defines a function to check the credentials, this is used in the test file to test the security check function.
+def validate_date(date):
+    pattern = r"^\d{2}-\d{2}-\d{4}$"
+    return re.match(pattern, date) is not None
 
 def main():
-    
     if not security_check():
         return
     
@@ -97,7 +105,13 @@ def main():
         choice = input("Choose an option:")# looping the main menu to allow for user to continue using the program for multiple inputs.
         
         if choice == "1":# assigns the users input for a desired outcome.
-            date = input("Enter date (DD-MM-YYYY):")
+            while True:
+
+                date = input("Enter date (DD-MM-YYYY):")
+                if validate_date(date):
+                    break
+                else:
+                    print("Invalid date format. Please enter the date in DD-MM-YYYY format.")
             amount = float(input("Enter amount:"))# getting user input for the date and amount of the transaction, then creating an instance of the Income class and adding it to the transactions list. also updating the initial balance by adding the income amount.
             category = input("Enter category:")
             source = input("Enter source:")
@@ -113,14 +127,14 @@ def main():
             source = input("Enter source:")
             expense = Expenses(date, amount, category, source)
             transactions.append(expense)
-            initial_balance -= amount
+            initial_balance -= amount# getting user input for the date and amount of the transaction then updating the initial balance by subtracting the expense amount.
             print("funds removed from record.")
         elif choice == "3":
             for transaction in transactions:
                 print(transaction.get_summary())
-            print(f"Current balance: £{initial_balance}")
+            print(f"Current balance: £{initial_balance}")# this is to print out the summary of transactions and the current balance, it will loop through the transactions and call the get_summary method for each transaction to print out the details, then it will print out the current balance.
         elif choice == "4":
-            save_transactions(transactions)
+            save_transactions(transactions)# this is to save the transactions to a csv file when the user chooses to exit the program, it will call the save_transactions function and pass in the transactions list, which will write the transactions to the csv file.
             print("data saved. exiting program.")
             break
 
